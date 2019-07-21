@@ -85,8 +85,20 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 		//2. Use a switch statement to determine which difficulty was chosen.
 		//   Use timer.setDelay(delay) with different numbers to change the speed
 		//   of the game. The smaller the number, the faster it goes.
-
+		switch(choice){
+		case "Expert":
+			timer.setDelay(50);
+			break;
+		case "Moderate":
+			timer.setDelay(100);
+			break;
+		case "Beginner":
+			timer.setDelay(200);
+			break;
+			
+		}
 		//3. start the timer
+		timer.start();
 	}
 
 	public static void main(String[] args) {
@@ -102,8 +114,24 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		//1. Use a switch statement on e.getKeyCode()
-		//   to determine which key was pressed.
-		
+		//   to determine which key was pressed
+		switch(e.getKeyCode()) {
+			case KeyEvent.VK_UP:
+				snake.setDirection(Direction.UP);
+				break;
+			case KeyEvent.VK_RIGHT:
+				snake.setDirection(Direction.RIGHT);
+				break;
+			case KeyEvent.VK_LEFT:
+				snake.setDirection(Direction.LEFT);
+				break;
+			case KeyEvent.VK_DOWN:
+				snake.setDirection(Direction.DOWN);
+				break;
+			case KeyEvent.VK_SPACE:
+				snake.feed();
+				break;
+		}
 		// if an arrow key is pressed, set the snake's 
 		// direction accordingly
 		
@@ -113,16 +141,32 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 
 	private void setFoodLocation() {
 		//1. Create a new Location object that is set to a random location
-		
+		Random r = new Random();
+		int x = r.nextInt(WIDTH) + 1;
+		Random rng = new Random();
+		int a = rng.nextInt(HEIGHT) + 1;
+		Location l = new Location(x, a);
 		//2. set the foodLocation variable equal to the Location object you just created.
 		//   use the snake's isLocationOnSnake method to make sure you don't put the food on the snake
+		foodLocation = l;
+	    boolean b = snake.isLocationOnSnake(foodLocation);		
+	    if(b== true) {
+			Random r2 = new Random();
+			int e = r2.nextInt(WIDTH) + 1;
+			Random r1 = new Random();
+			int ae = r1.nextInt(HEIGHT) + 1;
+			Location l2 = new Location(e, ae);
+			foodLocation = l2;
+	    }
 		
 	}
+
+
 
 	private void gameOver() {
 		
 		//1. stop the timer
-		
+		timer.stop();
 		//2. tell the user their snake is dead
 		
 		//3. ask them if they want to play again.
