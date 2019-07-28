@@ -75,7 +75,7 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 
 	public void startGame() {
 		//1. Save the instructions for the game in the following string variable.
-		String instructions = "";
+		String instructions = "Win";
 		
 		String[] options = new String[] { "Expert", "Moderate", "Beginner" };
 		int input = JOptionPane.showOptionDialog(null, instructions, "Snake", 0, -1, null, options, 0);
@@ -87,13 +87,13 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 		//   of the game. The smaller the number, the faster it goes.
 		switch(choice){
 		case "Expert":
-			timer.setDelay(50);
+			timer.setDelay(500);
 			break;
 		case "Moderate":
-			timer.setDelay(100);
+			timer.setDelay(1000);
 			break;
 		case "Beginner":
-			timer.setDelay(200);
+			timer.setDelay(2000);
 			break;
 			
 		}
@@ -168,12 +168,19 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 		//1. stop the timer
 		timer.stop();
 		//2. tell the user their snake is dead
-		
+		JOptionPane.showMessageDialog(null, "Your snake is dead");
 		//3. ask them if they want to play again.
-		
+		int a = JOptionPane.showConfirmDialog(null, "Do you want to play again?");
 		//4. if they want to play again
 		//   reset the snake and the food and start the timer
 		//   else, exit the game
+		if(a==0) {
+			startGame();
+			setFoodLocation();
+		}
+		else {
+			//exit the game
+		}
 		
 	}
 
@@ -185,13 +192,19 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//1. update the snake
-
+		snake.update();
 		//2. if the snake is colliding with its own body 
 		//   or if the snake is out of bounds, call gameOver
-
+		if(snake.isHeadCollidingWithBody() || snake.isOutOfBounds() == true) {
+			gameOver();
+		}
 		//3. if the location of the head is equal to the location of the food,
 		// 	 feed the snake and set the food location
-
+		if(snake.getHeadLocation() == foodLocation) {
+			snake.feed();
+			setFoodLocation();
+		}
 		//4. call panel.repaint();
+		panel.repaint();
 	}
 }
