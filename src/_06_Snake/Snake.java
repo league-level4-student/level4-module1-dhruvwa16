@@ -25,8 +25,31 @@ public class Snake {
 
 	public void feed() {
 		//1. add a new SnakeSegment object to the snake
-		snake.add(new SnakeSegment(snake.get(0).getLocation(), BODY_SIZE));
+		switch(currentDirection) {
+		case UP:
+			Location body = new Location(head.getLocation().x , head.getLocation().y++);
+			SnakeSegment s = new SnakeSegment(body, BODY_SIZE);
+			snake.add(s);
+			break;
+		case DOWN:
+			Location body2 = new Location( head.getLocation().y, head.getLocation().y--);
+			SnakeSegment s2 = new SnakeSegment(body2, BODY_SIZE);
+			snake.add(s2);
+			break;
+		case RIGHT:
+			Location body3 = new Location(head.getLocation().x--, head.getLocation().y);
+			SnakeSegment s3 = new SnakeSegment(body3, BODY_SIZE);
+			snake.add(s3);	
+			break;
+		case LEFT:
+			Location body4 = new Location(head.getLocation().x++, head.getLocation().y);
+			SnakeSegment s4 = new SnakeSegment(body4, BODY_SIZE);
+			snake.add(s4);
+			break;
 	}
+	
+}	
+	
 
 	public Location getHeadLocation() {
 		//2. return the location of the snake's head
@@ -39,35 +62,39 @@ public class Snake {
 		switch(currentDirection) {
 			case UP:
 				Location hl = head.getLocation();
-				hl.y--;
+				//hl.y--;
+				System.out.println();
 				for(SnakeSegment ss: snake) {
 					ss.getLocation().y--;
 				}
 				break;
 			case DOWN:
 				Location hl2 = head.getLocation();
-				hl2.y++;
+				//hl2.y++;
 				for(SnakeSegment ss: snake) {
 					ss.getLocation().y++;
 				}
 				break;
 			case RIGHT:
 				Location hl3 = head.getLocation();
-				hl3.x++;
+				//hl3.x++;
 				for(SnakeSegment ss: snake) {
 					ss.getLocation().x++;
 				}
 				break;
 			case LEFT:
 				Location hl4 = head.getLocation();
-				hl4.x--;
+				//hl4.x--;
 				for(SnakeSegment ss: snake) {
 					ss.getLocation().x--;
 				}
 				break;
+				
 		}
 		canMove = true;
-
+		System.out.println(head.getLocation().x);
+		System.out.println(head.getLocation().y);
+		System.out.println();
 
 		//2. Iterate through the SnakeSegments in reverse order
 		//2a. Update each snake segment to the location of the segment 
